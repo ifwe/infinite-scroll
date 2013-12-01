@@ -12,6 +12,11 @@ Requirements
 * Underscore 1.5.x
 * RequireJS (Optional)
 
+Demo
+----
+
+[View the demo!](http://htmlpreview.github.io/?https://github.com/tagged/infinite-scroll/blob/master/demo/index.html)
+
 Basic Usage
 -----
 
