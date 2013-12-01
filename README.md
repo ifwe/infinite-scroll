@@ -156,6 +156,7 @@ To set up the development environment, run these commands once:
     # 3rd-party libraries (Angular, jQuery, etc.)
     $ bower install
 
+** Running Tests**
 Once the development environment has been set up, tests can be run in a number of ways:
 
     # Run all tests once
@@ -163,6 +164,11 @@ Once the development environment has been set up, tests can be run in a number o
 
     # Run tests in development mode (enables file watcher to automatically rerun tests)
     $ grunt dev
+
+**Building Production Files**
+
+    # Build production files in `/build`
+    $ grunt build
 
 **Contributions welcome!**
 All we ask is that pull requests include unit tests. Thanks!
