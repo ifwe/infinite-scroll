@@ -36,7 +36,7 @@ module.exports = function(grunt) {
           name: "src/taggedInfiniteScroll",
           optimize: "uglify2",
           preserveLicenseComments: false,
-          out: "build/taggedInfiniteScroll-min.js"
+          out: "build/taggedInfiniteScroll.min.js"
         }
       },
       'build-unminified': {
