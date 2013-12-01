@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Infinite Scroll for AngularJS by Tagged</title>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+<script type="text/javascript" src="../build/taggedInfiniteScroll.js"></script>
+<link type="text/css" rel="stylesheet" href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"></link>
+</head>
+<body ng-app="Demo" ng-cloak>
+<style type="text/css">
+dl.fields{
+    clear: left;
+    margin: 0;
+    padding: 18px 0;
+    list-style-type: none;
+}
+
+dl.fields dt{
+    width: 140px;
+    float: left;
+    clear: left;
+}
+
+dl.fields dd{
+    margin-left: 150px;
+}
+
+ul.items{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.items li{
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.paginating{
+  opacity: 0.5;
+}
+</style>
+
+<div class="container">
+  <h2>Infinite Scroll</h2>
+  <p>
+    Easily add infinite-scroll support to any container. When
+    the user has scrolled to the bottom, your custom callback
+    function will fire to get more results. You can choose to
+    get more items sooner by specifying the <code>tagged-infinite-scroll-distance</code>
+    attribute, and you can disable infinite scroll by setting
+    the <code>tagged-infinite-scroll-disabled</code> attribute.
+  </p>
+
+
+  <div ng-controller="InfiniteScrollDemoController">
+    <dl class="fields">
+      <dt>Enabled:</dt>
+      <dd>
+        <button ng-click="enabled = true" ng-disabled="enabled">Enable</button>
+        <button ng-click="enabled = false" ng-disabled="!enabled">Disable</button>
+      </dd>
+
+      <dt>Distance:</dt>
+      <dd>
+        <input type="range" min="0" max="500" ng-model="distance" />
+        {{ distance }}
+      </dd>
+
+      <dt>Reset:</dt>
+      <dd><button ng-click="reset()">Reset Content</button></dd>
+    </dl>
+
+    <div tagged-infinite-scroll="getMore()" tagged-infinite-scroll-disabled="!enabled || paginating" tagged-infinite-scroll-distance="distance">
+      <ul class="items" ng-class="{ paginating: paginating }">
+        <li ng-repeat="item in items" ng-style="item.styles">
+          <h3>{{ item.title }}</h3>
+          <div>{{ item.description }}</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+<!--
+var demo = angular.module('Demo', ['tagged.directives.infiniteScroll']);
+
+function InfiniteScrollDemoController($scope, $timeout) {
+  $scope.items = [];
+  $scope.distance = 0;
+  $scope.paginating = false;
+
+  // This is called each time the infinite scroll directive needs to get more items.
+  // This dummy implementation simply adds fake items to `$scope.items` and limits
+  // itself to 50 items.
+  $scope.getMore = function() {
+    if ($scope.items.length >= 50) return;
+
+    if (true === $scope.paginating) return;
+
+    var timeout = ($scope.items.length ? 1000 : 0);
+    $scope.paginating = true;
+
+    // Fake network latency using timeout
+    $timeout(function() {
+      for (var i = $scope.items.length + 1, len = i + 10; i < len; i++) {
+        $scope.items.push({
+          title: 'the title ' + i,
+          description: 'the description ' + i + ': Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+          styles: {
+            background: 'hsl(' + (i * 107) % 360 + ', 70%, 85%)'
+          }
+        });
+      }
+      $scope.paginating = false;
+    }, timeout);
+  };
+
+  $scope.getMore();
+
+  $scope.reset = function() {
+    $scope.items = [];
+    $scope.getMore();
+  };
+}
+//-->
+</script>
+
+</body>
+</html>

@@ -36,7 +36,10 @@ module.exports = function(grunt) {
           name: "src/taggedInfiniteScroll",
           optimize: "uglify2",
           preserveLicenseComments: false,
-          out: "build/taggedInfiniteScroll.min.js"
+          out: "build/taggedInfiniteScroll.min.js",
+          wrap: {
+            end: "require('src/taggedInfiniteScroll');"
+          }
         }
       },
       'build-unminified': {
@@ -47,8 +50,13 @@ module.exports = function(grunt) {
           mainConfigFile: 'config/require.build.js',
           name: "src/taggedInfiniteScroll",
           optimize: "none",
+          useStrict: true,
+          // skipModuleInsertion: true,
           preserveLicenseComments: false,
-          out: "build/taggedInfiniteScroll.js"
+          out: "build/taggedInfiniteScroll.js",
+          wrap: {
+            end: "require('src/taggedInfiniteScroll');"
+          }
         }
       }
     }

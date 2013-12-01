@@ -1,4 +1,4 @@
-define(['angular', 'underscore'], function(angular, _) {
+define(['angular', 'underscore'], function() {
   "use strict";
 
   // Allows a container to support infinite scroll

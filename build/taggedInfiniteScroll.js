@@ -415,8 +415,8 @@ define("bower_components/almond/almond", function(){});
 define('jquery',{});
 define('angular',{});
 define('underscore',{});
-define('src/taggedInfiniteScroll',['angular', 'underscore'], function(angular, _) {
-  
+define('src/taggedInfiniteScroll',['angular', 'underscore'], function() {
+  "use strict";
 
   // Allows a container to support infinite scroll
   // Based on: http://binarymuse.github.io/ngInfiniteScroll/
@@ -468,3 +468,4 @@ define('src/taggedInfiniteScroll',['angular', 'underscore'], function(angular, _
     };
   }]);
 });
+require('src/taggedInfiniteScroll');
