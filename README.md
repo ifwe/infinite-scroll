@@ -15,9 +15,9 @@ Requirements
 Basic Usage
 -----
 
-To get started, add `taggedInfiniteScroll.js` to your webpage:
+To get started, add `build/taggedInfiniteScroll-min.js` to your webpage:
 
-    <script type="text/javascript" src="taggedInfiniteScroll.js"></script>
+    <script type="text/javascript" src="path/to/taggedInfiniteScroll-min.js"></script>
 
 And add the module `tagged.directives.infiniteScroll` to your app's dependencies:
 
@@ -37,7 +37,7 @@ Next, add the attribute `tagged-infinite-scroll` to any element that will contai
     </div>
 
     ## Javascript
-    var app = angular.module('MyApp', ['tagged.directives.infiniteScroll'];
+    var app = angular.module('MyApp', ['tagged.directives.infiniteScroll']);
     app.controller('MainController', ['$scope', '$http', function($scope, $http) {
       $scope.items = [];
       $scope.getMore = function() {
@@ -68,7 +68,7 @@ To support async callbacks, assign an expression to the `tagged-infinite-scroll-
     </div>
 
     ## Javascript
-    var app = angular.module('MyApp', ['tagged.directives.infiniteScroll'];
+    var app = angular.module('MyApp', ['tagged.directives.infiniteScroll']);
     app.controller('MainController', ['$scope', '$http', function($scope, $http) {
       $scope.page = 1;
       $scope.items = [];
@@ -107,7 +107,36 @@ Your callback can be fired optimisticly before the user reaches the bottom to he
 Using RequireJS
 ---------------
 
-*Documentation coming soon!*
+This directive can be loaded as an AMD module if you're using RequireJS. There are a few requirements:
+
+1. You must add paths to `angular` and `underscore` in your RequireJS config.
+2. You must shim `angular` to export `angular`, and it must be dependent on `jquery` (path to jquery does not matter).
+3. You must shim `underscore` to export `_`.
+
+At minimum, your requirejs config must include this:
+
+    requirejs.config({
+      paths: {
+        'angular': 'path/to/angular',
+        'underscore': 'path/to/underscore'
+      },
+      shim: {
+        'angular': {
+          'exports': 'angular',
+          'deps': ['path/to/jquery']
+        },
+        'underscore': {
+          'exports': '_'
+        }
+      }
+    });
+
+Once configured, you can `require()` the original source file `src/taggedInfiniteScroll` in your app:
+
+    define(['angular', 'path/to/src/taggedInfiniteScroll'], function(angular) {
+      var app = angular.module('MyApp', ['tagged.directives.infiniteScroll']);
+      // ... //
+    });
 
 Development
 -----------
