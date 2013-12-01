@@ -1,4 +1,5 @@
 module.exports = function(grunt) {
+  grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-karma');
 
   grunt.initConfig({
@@ -23,6 +24,33 @@ module.exports = function(grunt) {
           dir : 'coverage/'
         }
       }
+    },
+
+    requirejs: {
+      'build-minified': {
+        options: {
+          baseUrl: ".",
+          include: ['bower_components/almond/almond'],
+          stubModules: ['angular', 'jquery', 'underscore'],
+          mainConfigFile: 'config/require.build.js',
+          name: "src/taggedInfiniteScroll",
+          optimize: "uglify2",
+          preserveLicenseComments: false,
+          out: "build/taggedInfiniteScroll-min.js"
+        }
+      },
+      'build-unminified': {
+        options: {
+          baseUrl: ".",
+          include: ['bower_components/almond/almond'],
+          stubModules: ['angular', 'jquery', 'underscore'],
+          mainConfigFile: 'config/require.build.js',
+          name: "src/taggedInfiniteScroll",
+          optimize: "none",
+          preserveLicenseComments: false,
+          out: "build/taggedInfiniteScroll.js"
+        }
+      }
     }
   });
 
@@ -34,4 +62,7 @@ module.exports = function(grunt) {
 
   // Generate a coverage report in Cobertura format
   grunt.registerTask('cobertura', 'Run unit tests in watch mode', ['karma:cobertura']);
+
+  // Build files for production
+  grunt.registerTask('build', 'Builds files for production', ['requirejs:build-minified', 'requirejs:build-unminified']);
 };

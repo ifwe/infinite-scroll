@@ -20,6 +20,7 @@
     "karma-sinon": "~1.0.0",
     "karma-sinon-chai": "~0.1.1",
     "karma-safari-launcher": "~0.1.1",
-    "karma-story-reporter": "~0.2.0"
+    "karma-story-reporter": "~0.2.0",
+    "grunt-contrib-requirejs": "~0.4.1"
   }
 }

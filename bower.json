@@ -19,9 +19,10 @@
     "tests"
   ],
   "dependencies": {
+    "almond": "~0.2.7",
     "angular": "~1.2.3",
     "angular-mocks": "~1.2.3",
-    "underscore": "~1.5.2",
-    "jquery": "1.10.2"
+    "jquery": "1.10.2",
+    "underscore": "~1.5.2"
   }
 }
