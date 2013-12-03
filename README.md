@@ -180,3 +180,7 @@ Once the development environment has been set up, tests can be run in a number o
 
 **Contributions welcome!**
 All we ask is that pull requests include unit tests. Thanks!
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/tagged/infinite-scroll/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
