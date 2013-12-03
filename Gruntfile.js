@@ -1,8 +1,15 @@
 module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-karma-coveralls');
 
   grunt.initConfig({
+    coveralls: {
+      options: {
+        coverage_dir: 'coverage/'
+      }
+    },
+
     karma: {
       options: {
         configFile: 'config/karma.conf.js'
@@ -25,7 +32,16 @@ module.exports = function(grunt) {
         }
       },
       travis: {
-        browsers: ['PhantomJS']
+        singleRun: true,
+        reporters: ['dots', 'coverage'],
+        browsers: ['PhantomJS'],
+        preprocessors: {
+          'src/*.js': 'coverage'
+        },
+        coverageReporter: {
+          type : 'lcov',
+          dir : 'coverage/'
+        }
       }
     },
 
@@ -78,5 +94,5 @@ module.exports = function(grunt) {
   grunt.registerTask('build', 'Builds files for production', ['requirejs:build-minified', 'requirejs:build-unminified']);
 
   // Travis CI task
-  grunt.registerTask('travis', 'Travis CI task', ['karma:travis']);
+  grunt.registerTask('travis', 'Travis CI task', ['karma:travis', 'coveralls']);
 };
