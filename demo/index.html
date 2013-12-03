@@ -92,6 +92,7 @@ function InfiniteScrollDemoController($scope, $timeout) {
   $scope.items = [];
   $scope.distance = 0;
   $scope.paginating = false;
+  $scope.enabled = true;
 
   // This is called each time the infinite scroll directive needs to get more items.
   // This dummy implementation simply adds fake items to `$scope.items` and limits
