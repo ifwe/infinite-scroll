@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/tagged/infinite-scroll.png)](https://travis-ci.org/tagged/infinite-scroll)
+
 Infinite Scroll for AngularJS
 =============================
 By [Tagged](http://www.tagged.com)

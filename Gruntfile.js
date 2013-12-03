@@ -23,6 +23,9 @@ module.exports = function(grunt) {
           type : 'cobertura',
           dir : 'coverage/'
         }
+      },
+      travis: {
+        browsers: ['PhantomJS']
       }
     },
 
@@ -73,4 +76,7 @@ module.exports = function(grunt) {
 
   // Build files for production
   grunt.registerTask('build', 'Builds files for production', ['requirejs:build-minified', 'requirejs:build-unminified']);
+
+  // Travis CI task
+  grunt.registerTask('travis', 'Travis CI task', ['karma:travis']);
 };
