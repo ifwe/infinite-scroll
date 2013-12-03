@@ -6,6 +6,7 @@
     "grunt": "~0.4.2",
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-karma": "~0.6.2",
+    "grunt-karma-coveralls": "~2.0.2",
     "karma": "~0.10.6",
     "karma-chai": "0.0.2",
     "karma-chrome-launcher": "~0.1.1",
