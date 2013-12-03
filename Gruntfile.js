@@ -72,7 +72,7 @@ module.exports = function(grunt) {
   grunt.registerTask('dev', 'Run unit tests in watch mode', ['karma:dev']);
 
   // Generate a coverage report in Cobertura format
-  grunt.registerTask('cobertura', 'Run unit tests in watch mode', ['karma:cobertura']);
+  grunt.registerTask('cobertura', 'Generate Cobertura coverage report', ['karma:cobertura']);
 
   // Build files for production
   grunt.registerTask('build', 'Builds files for production', ['requirejs:build-minified', 'requirejs:build-unminified']);
