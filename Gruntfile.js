@@ -14,6 +14,10 @@ module.exports = function(grunt) {
       options: {
         configFile: 'config/karma.conf.js'
       },
+      coverage: {
+        browsers: ['PhantomJS'],
+        reporters: ['progress', 'coverage']
+      },
       test: {
         // Use defaults
       },
