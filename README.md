@@ -95,7 +95,7 @@ Before the user actually reaches the bottom of the page your callback can be tri
 
 ## Getting Started
 
-To get started, add `build/taggedInfiniteScroll-min.js` to your webpage:
+To get started, add `taggedInfiniteScroll-min.js` to your webpage:
 ```html
 <script type="text/javascript" src="path/to/taggedInfiniteScroll-min.js"></script>
 ```
@@ -182,7 +182,7 @@ $ grunt dev
 
 **Building Production Files**
 ```bash
-# Build production files in `/build`
+# Build production files in `./`
 $ grunt build
 ```
 
