@@ -1,11 +1,11 @@
 {
   "name": "tagged-infinite-scroll",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "authors": [
     "Hector Virgen <hvirgen@tagged.com>"
   ],
   "description": "Infinite Scroll for AngularJS",
-  "main": "src/taggedInfiniteScroll.js",
+  "main": "taggedInfiniteScroll.js",
   "keywords": [
     "Angular",
     "Directive",
@@ -19,7 +19,6 @@
     "tests"
   ],
   "dependencies": {
-    "almond": "~0.2.7",
     "angular": "~1.2.3",
     "angular-mocks": "~1.2.3",
     "jquery": "1.10.2",

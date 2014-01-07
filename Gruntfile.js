@@ -1,9 +1,24 @@
 module.exports = function(grunt) {
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-karma-coveralls');
 
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+
+    concat: {
+      options: {
+        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+          '<%= grunt.template.today("yyyy-mm-dd") %> */\n',
+      },
+      build: {
+        src: ['src/taggedInfiniteScroll.js'],
+        dest: 'taggedInfiniteScroll.js'
+      },
+    },
+
     coveralls: {
       options: {
         coverage_dir: 'coverage/'
@@ -45,37 +60,10 @@ module.exports = function(grunt) {
       }
     },
 
-    requirejs: {
-      'build-minified': {
-        options: {
-          baseUrl: ".",
-          include: ['bower_components/almond/almond'],
-          stubModules: ['angular', 'jquery', 'underscore'],
-          mainConfigFile: 'config/require.build.js',
-          name: "src/taggedInfiniteScroll",
-          optimize: "uglify2",
-          preserveLicenseComments: false,
-          out: "build/taggedInfiniteScroll.min.js",
-          wrap: {
-            end: "require('src/taggedInfiniteScroll');"
-          }
-        }
-      },
-      'build-unminified': {
-        options: {
-          baseUrl: ".",
-          include: ['bower_components/almond/almond'],
-          stubModules: ['angular', 'jquery', 'underscore'],
-          mainConfigFile: 'config/require.build.js',
-          name: "src/taggedInfiniteScroll",
-          optimize: "none",
-          useStrict: true,
-          // skipModuleInsertion: true,
-          preserveLicenseComments: false,
-          out: "build/taggedInfiniteScroll.js",
-          wrap: {
-            end: "require('src/taggedInfiniteScroll');"
-          }
+    uglify: {
+      build: {
+        files: {
+          'taggedInfiniteScroll.min.js': ['taggedInfiniteScroll.js']
         }
       }
     }
@@ -91,7 +79,7 @@ module.exports = function(grunt) {
   grunt.registerTask('cobertura', 'Generate Cobertura coverage report', ['karma:cobertura']);
 
   // Build files for production
-  grunt.registerTask('build', 'Builds files for production', ['requirejs:build-minified', 'requirejs:build-unminified']);
+  grunt.registerTask('build', 'Builds files for production', ['concat:build', 'uglify:build']);
 
   // Travis CI task
   grunt.registerTask('travis', 'Travis CI task', ['karma:travis', 'coveralls']);
