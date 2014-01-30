@@ -10,7 +10,7 @@ requirejs.config({
     'angular': 'bower_components/angular/angular',
     'angular/mocks': 'bower_components/angular-mocks/angular-mocks',
     'jquery': 'bower_components/jquery/jquery',
-    '_': 'bower_components/underscore/underscore'
+    'underscore': 'bower_components/underscore/underscore'
   },
   shim: {
     'angular': {
@@ -20,7 +20,7 @@ requirejs.config({
     'angular/mocks': {
       'deps': ['angular']
     },
-    '_': {
+    'underscore': {
       'exports': '_'
     }
   },

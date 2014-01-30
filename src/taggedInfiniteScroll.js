@@ -1,7 +1,7 @@
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['angular', '_'], factory);
+    define(['angular', 'underscore'], factory);
   } else {
     // Browser globals
     root.taggedInfiniteScroll = factory(root.angular, root._);
