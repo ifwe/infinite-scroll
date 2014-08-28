@@ -45,11 +45,11 @@
         // Check immediately if we need more items upon reenabling.
         scope.$watch('disabled', onScroll);
 
-        $win.bind('scroll', onScroll);
+        $win.bind('scroll wheel', onScroll);
 
         // Remove window scroll handler when this element is removed.
         scope.$on('$destroy', function() {
-          $win.unbind('scroll', onScroll);
+          $win.unbind('scroll wheel', onScroll);
         });
 
         // Check on next event loop to give the browser a moment to paint.
