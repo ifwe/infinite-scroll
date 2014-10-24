@@ -109,9 +109,7 @@ Then simply add the `tagged-infinite-scroll` attribute to any element that will 
 
 ### Requirements
 
-* AngularJS 1.1.5 - 1.2.x
-* jQuery 1.10.x
-* Underscore 1.5.x
+* AngularJS 1.1.5 - 1.3.0
 * RequireJS (Optional)
 
 ### Using RequireJS
