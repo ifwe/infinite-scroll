@@ -1,4 +1,4 @@
-/*! tagged-infinite-scroll - v0.0.1 - 2014-10-23 */
+/*! tagged-infinite-scroll - v0.0.1 - 2014-10-24 */
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
@@ -32,13 +32,11 @@
             return;
           }
 
-          var windowHeight = win[0].outerHeight;
+          var windowHeight = win[0].innerHeight;
           var elementBottom = elem[0].offsetTop + elem[0].offsetHeight;
           var windowBottom = windowHeight + win[0].scrollY;
           var remaining = elementBottom - windowBottom;
           var shouldGetMore = (remaining - parseInt(scope.distance || 0, 10) <= 0);
-
-          console.log('should get more? ' + shouldGetMore);
 
           if (shouldGetMore) {
             $timeout(scope.callback);

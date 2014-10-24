@@ -31,7 +31,7 @@
             return;
           }
 
-          var windowHeight = win[0].outerHeight;
+          var windowHeight = win[0].innerHeight;
           var elementBottom = elem[0].offsetTop + elem[0].offsetHeight;
           var windowBottom = windowHeight + win[0].scrollY;
           var remaining = elementBottom - windowBottom;
