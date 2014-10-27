@@ -14,8 +14,6 @@
   var module = angular.module('tagged.directives.infiniteScroll', []);
 
   module.directive('taggedInfiniteScroll', ['$window', '$timeout', function($window, $timeout) {
-    // var SCROLL_THROTTLE = 50;
-
     return {
       scope: {
         callback: '&taggedInfiniteScroll',
@@ -25,12 +23,11 @@
       link: function(scope, elem, attrs) {
         var win = angular.element($window);
 
-        var onScroll = function() {
+        var onScroll = function(oldValue, newValue) {
           // Do nothing if infinite scroll has been disabled
           if (scope.disabled) {
             return;
           }
-
           var windowHeight = win[0].innerHeight;
           var elementBottom = elem[0].offsetTop + elem[0].offsetHeight;
           var windowBottom = windowHeight + win[0].scrollY;
@@ -43,7 +40,9 @@
         };
 
         // Check immediately if we need more items upon reenabling.
-        scope.$watch('disabled', onScroll);
+        scope.$watch('disabled', function(isDisabled){
+            if (false === isDisabled) onScroll();
+        });
 
         win.bind('scroll', onScroll);
 
