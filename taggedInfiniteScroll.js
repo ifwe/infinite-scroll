@@ -1,4 +1,4 @@
-/*! tagged-infinite-scroll - v0.0.1 - 2014-10-28 */
+/*! tagged-infinite-scroll - v1.1.0 - 2014-10-28 */
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
