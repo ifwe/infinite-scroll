@@ -84,7 +84,8 @@ ul.items li{
 
 <script type="text/javascript">
 <!--
-var demo = angular.module('Demo', ['tagged.directives.infiniteScroll']).controller('InfiniteScrollDemoController', InfiniteScrollDemoController);
+var demo = angular.module('Demo', ['tagged.directives.infiniteScroll'])
+              .controller('InfiniteScrollDemoController', InfiniteScrollDemoController);
 
 function InfiniteScrollDemoController($scope, $timeout) {
   $scope.items = [];
