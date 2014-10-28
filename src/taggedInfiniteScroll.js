@@ -1,12 +1,12 @@
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['angular', 'underscore'], factory);
+    define(['angular'], factory);
   } else {
     // Browser globals
-    root.taggedInfiniteScroll = factory(root.angular, root._);
+    root.taggedInfiniteScroll = factory(root.angular);
   }
-}(this, function (angular, _) {
+}(this, function (angular) {
   "use strict";
 
   // Allows a container to support infinite scroll
@@ -14,8 +14,6 @@
   var module = angular.module('tagged.directives.infiniteScroll', []);
 
   module.directive('taggedInfiniteScroll', ['$window', '$timeout', function($window, $timeout) {
-    var SCROLL_THROTTLE = 50;
-
     return {
       scope: {
         callback: '&taggedInfiniteScroll',
@@ -23,33 +21,34 @@
         disabled: '=taggedInfiniteScrollDisabled'
       },
       link: function(scope, elem, attrs) {
-        var $win = angular.element($window);
+        var win = angular.element($window);
 
-        var onScroll = _.throttle(function() {
+        var onScroll = function(oldValue, newValue) {
           // Do nothing if infinite scroll has been disabled
           if (scope.disabled) {
             return;
           }
-
-          var windowHeight = $win.height();
-          var elementBottom = elem.offset().top + elem.height();
-          var windowBottom = windowHeight + $win.scrollTop();
+          var windowHeight = win[0].innerHeight;
+          var elementBottom = elem[0].offsetTop + elem[0].offsetHeight;
+          var windowBottom = windowHeight + win[0].scrollY;
           var remaining = elementBottom - windowBottom;
           var shouldGetMore = (remaining - parseInt(scope.distance || 0, 10) <= 0);
 
           if (shouldGetMore) {
             $timeout(scope.callback);
           }
-        }, SCROLL_THROTTLE);
+        };
 
         // Check immediately if we need more items upon reenabling.
-        scope.$watch('disabled', onScroll);
+        scope.$watch('disabled', function(isDisabled){
+            if (false === isDisabled) onScroll();
+        });
 
-        $win.bind('scroll', onScroll);
+        win.bind('scroll', onScroll);
 
         // Remove window scroll handler when this element is removed.
         scope.$on('$destroy', function() {
-          $win.unbind('scroll', onScroll);
+          win.unbind('scroll', onScroll);
         });
 
         // Check on next event loop to give the browser a moment to paint.

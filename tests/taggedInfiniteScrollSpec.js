@@ -1,25 +1,39 @@
 /*jshint expr: true*/
 define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
   describe('Module: tagged.directives.infiniteScroll', function() {
-    beforeEach(module('tagged.directives.infiniteScroll'));
-
-    beforeEach(function() {
-      this.clock = sinon.useFakeTimers();
-    });
-
-    afterEach(function() {
-      this.clock.restore();
-    });
+    beforeEach(module('tagged.directives.infiniteScroll', function($provide){
+      $document = angular.element(document);
+      $provide.decorator('$window', function($delegate){
+        return {
+          triggerHandler: function(evt){
+            $delegate.triggerHandler(evt);
+          },
+          scrollY: 0,
+          innerHeight: 0,
+          addEventListener: function(type, fn, useCapture){
+            $delegate.addEventListener(type, fn, useCapture);
+          },
+          removeEventListener: function(type, fn, useCapture){
+            $delegate.removeEventListener(type, fn, useCapture);
+          },
+          attachEvent: function(type, fn){
+            $delegate.attachEvent('on' + type, fn);
+          },
+          detachEvent: function(type, fn){
+            $delegate.detachEvent('on' + type, fn);
+          }
+        };
+      });
+      $provide.value('$document', $document);
+    }));
 
     var testDoesNotGetMore = function(scroll) {
       return function() {
-        this.stubWindow.scrollTop.returns(scroll);
-        this.stubWindow.trigger('scroll');
-        this.clock.tick(50);
+        this.stubWindow[0].scrollY = scroll;
+        this.stubWindow.triggerHandler('scroll');
         this.timeout.flush();
         this.scope.$apply();
         // 2nd timer, if any
-        this.clock.tick(50);
         try { this.timeout.flush(); } catch (e) { }
         this.timeout.verifyNoPendingTasks();
         this.scope.more.called.should.be.false;
@@ -28,13 +42,11 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
 
     var testDoesGetMore = function(scroll) {
       return function() {
-        this.stubWindow.scrollTop.returns(scroll);
-        this.stubWindow.trigger('scroll');
-        this.clock.tick(50);
+        this.stubWindow[0].scrollY = scroll;
+        this.stubWindow.triggerHandler('scroll');
         this.timeout.flush();
         this.scope.$apply();
         // 2nd timer, if any
-        this.clock.tick(50);
         try { this.timeout.flush(); } catch (e) { }
         this.timeout.verifyNoPendingTasks();
         this.scope.more.called.should.be.true;
@@ -45,7 +57,7 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
       beforeEach(inject(function($rootScope, $compile, $window, $document, $timeout) {
         this.elem = angular.element('<div tagged-infinite-scroll="more()">content</div>');
         this.elem.css({
-          height: '1000px'
+          height: '1000px',
         });
         this.scope = $rootScope.$new();
         this.scope.more = angular.noop;
@@ -54,9 +66,14 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
         this.document = $document;
         this.timeout = $timeout;
         this.window = $window;
+
         this.stubWindow = angular.element(this.window);
-        sinon.stub(this.stubWindow, 'scrollTop');
-        sinon.stub(this.stubWindow, 'height').returns(300);
+        this.stubWindow[0].innerHeight = 300;
+        this.document.find('body').append(this.elem);
+        this.document.find('body').css({
+          'margin': '0',
+          'padding': '0'
+        });
         sinon.stub(angular, 'element');
         angular.element.withArgs(this.window).returns(this.stubWindow);
         this.compile(this.elem)(this.scope);
@@ -86,7 +103,6 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
     describe('page section offset from top by 500px', function() {
       beforeEach(inject(function($rootScope, $compile, $window, $document, $timeout) {
         this.elem = angular.element('<div tagged-infinite-scroll="more()">content</div>');
-        sinon.stub(jQuery.fn, 'offset').returns({top: 500});
         this.elem.css({
           height: '1000px'
         });
@@ -98,8 +114,12 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
         this.timeout = $timeout;
         this.window = $window;
         this.stubWindow = angular.element(this.window);
-        sinon.stub(this.stubWindow, 'scrollTop');
-        sinon.stub(this.stubWindow, 'height').returns(300);
+        this.stubWindow[0].innerHeight = 300;
+        this.document.find('body').append(this.elem);
+        this.document.find('body').css({
+          'margin-top': '500px',
+          'padding': '0'
+        });
         sinon.stub(angular, 'element');
         angular.element.withArgs(this.window).returns(this.stubWindow);
         this.compile(this.elem)(this.scope);
@@ -108,7 +128,6 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
 
       afterEach(function() {
         angular.element.restore();
-        jQuery.fn.offset.restore();
         this.elem.remove();
       });
 
@@ -135,8 +154,12 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
         this.timeout = $timeout;
         this.window = $window;
         this.stubWindow = angular.element(this.window);
-        sinon.stub(this.stubWindow, 'scrollTop');
-        sinon.stub(this.stubWindow, 'height').returns(300);
+        this.stubWindow[0].innerHeight = 300;
+        this.document.find('body').append(this.elem);
+        this.document.find('body').css({
+          'margin': '0',
+          'padding': '0'
+        });
         sinon.stub(angular, 'element');
         angular.element.withArgs(this.window).returns(this.stubWindow);
         this.compile(this.elem)(this.scope);
@@ -172,8 +195,12 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
         this.timeout = $timeout;
         this.window = $window;
         this.stubWindow = angular.element(this.window);
-        sinon.stub(this.stubWindow, 'scrollTop');
-        sinon.stub(this.stubWindow, 'height').returns(300);
+        this.stubWindow[0].innerHeight = 300;
+        this.document.find('body').append(this.elem);
+        this.document.find('body').css({
+          'margin': '0',
+          'padding': '0'
+        });
         sinon.stub(angular, 'element');
         angular.element.withArgs(this.window).returns(this.stubWindow);
         this.compile(this.elem)(this.scope);
@@ -191,16 +218,14 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
 
       var testDoesGetMoreWhenReenabled = function(scroll) {
         return function() {
-          this.stubWindow.scrollTop.returns(scroll);
-          this.stubWindow.trigger('scroll');
-          this.clock.tick(50);
+          this.stubWindow[0].scrollY = scroll;
+          this.stubWindow.triggerHandler('scroll');
           this.timeout.flush();
           this.scope.$apply();
           this.scope.more.called.should.be.false;
           this.scope.obj.isDisabled = false;
           this.scope.$apply();
           // 2nd timer, if any
-          this.clock.tick(50);
           try { this.timeout.flush(); } catch (e) { }
           this.timeout.verifyNoPendingTasks();
           this.scope.more.called.should.be.true;
@@ -209,16 +234,14 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
 
       var testDoesNotGetMoreWhenReenabled = function(scroll) {
         return function() {
-          this.stubWindow.scrollTop.returns(scroll);
-          this.stubWindow.trigger('scroll');
-          this.clock.tick(50);
+          this.stubWindow[0].scrollY = scroll;
+          this.stubWindow.triggerHandler('scroll');
           this.timeout.flush();
           this.scope.$apply();
           this.scope.more.called.should.be.false;
           this.scope.obj.isDisabled = false;
           this.scope.$apply();
           // 2nd timer, if any
-          this.clock.tick(50);
           try { this.timeout.flush(); } catch (e) { }
           this.timeout.verifyNoPendingTasks();
           this.scope.more.called.should.be.false;
@@ -234,7 +257,7 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
       });
     });
 
-    describe('enabled', function() {
+    ('enabled', function() {
       beforeEach(inject(function($rootScope, $compile, $window, $document, $timeout) {
         this.elem = angular.element('<div tagged-infinite-scroll="more()" tagged-infinite-scroll-disabled="isDisabled">content</div>');
         this.elem.css({
@@ -249,8 +272,12 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
         this.timeout = $timeout;
         this.window = $window;
         this.stubWindow = angular.element(this.window);
-        sinon.stub(this.stubWindow, 'scrollTop');
-        sinon.stub(this.stubWindow, 'height').returns(300);
+        this.stubWindow[0].innerHeight = 300;
+        this.document.find('body').append(this.elem);
+        this.document.find('body').css({
+          'margin': '0',
+          'padding': '0'
+        });
         sinon.stub(angular, 'element');
         angular.element.withArgs(this.window).returns(this.stubWindow);
         this.compile(this.elem)(this.scope);

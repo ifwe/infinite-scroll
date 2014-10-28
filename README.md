@@ -109,32 +109,24 @@ Then simply add the `tagged-infinite-scroll` attribute to any element that will 
 
 ### Requirements
 
-* AngularJS 1.1.5 - 1.2.x
-* jQuery 1.10.x
-* Underscore 1.5.x
+* AngularJS 1.1.5 - 1.3.0
 * RequireJS (Optional)
 
 ### Using RequireJS
 This directive can be loaded as an AMD module if you're using RequireJS. There are a few requirements:
 
-1. You must add paths to `angular` and `underscore` in your RequireJS config.
-2. You must shim `angular` to export `angular`, and it must be dependent on `jquery` (path to jquery does not matter).
-3. You must shim `underscore` to export `_`.
+1. You must add paths to `angular` in your RequireJS config.
+2. You must shim `angular` to export `angular`.
 
 At minimum, your requirejs config must include this:
 ```js
 requirejs.config({
   paths: {
-    'angular': 'path/to/angular',
-    'underscore': 'path/to/underscore'
+    'angular': 'path/to/angular'
   },
   shim: {
     'angular': {
-      'exports': 'angular',
-      'deps': ['path/to/jquery']
-    },
-    'underscore': {
-      'exports': '_'
+      'exports': 'angular'
     }
   }
 });
@@ -165,7 +157,7 @@ $ npm install --global grunt-cli bower
 # Local node dependencies (karma, etc.)
 $ npm install
 
-# 3rd-party libraries (Angular, jQuery, etc.)
+# 3rd-party libraries (Angular)
 $ bower install
 ```
 
