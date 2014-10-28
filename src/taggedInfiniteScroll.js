@@ -4,9 +4,9 @@
     define(['angular'], factory);
   } else {
     // Browser globals
-    root.taggedInfiniteScroll = factory(root.angular, root._);
+    root.taggedInfiniteScroll = factory(root.angular);
   }
-}(this, function (angular, _) {
+}(this, function (angular) {
   "use strict";
 
   // Allows a container to support infinite scroll

@@ -8,7 +8,20 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
           triggerHandler: function(evt){
             $delegate.triggerHandler(evt);
           },
-          scrollY: 0
+          scrollY: 0,
+          innerHeight: 0,
+          addEventListener: function(type, fn, useCapture){
+            $delegate.addEventListener(type, fn, useCapture);
+          },
+          removeEventListener: function(type, fn, useCapture){
+            $delegate.removeEventListener(type, fn, useCapture);
+          },
+          attachEvent: function(type, fn){
+            $delegate.attachEvent('on' + type, fn);
+          },
+          detachEvent: function(type, fn){
+            $delegate.detachEvent('on' + type, fn);
+          }
         };
       });
       $provide.value('$document', $document);
@@ -17,7 +30,6 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
     var testDoesNotGetMore = function(scroll) {
       return function() {
         this.stubWindow[0].scrollY = scroll;
-        this.elem[0].offsetHeight = 1000;
         this.stubWindow.triggerHandler('scroll');
         this.timeout.flush();
         this.scope.$apply();
@@ -54,6 +66,7 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
         this.document = $document;
         this.timeout = $timeout;
         this.window = $window;
+
         this.stubWindow = angular.element(this.window);
         this.stubWindow[0].innerHeight = 300;
         this.document.find('body').append(this.elem);
@@ -206,7 +219,7 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
       var testDoesGetMoreWhenReenabled = function(scroll) {
         return function() {
           this.stubWindow[0].scrollY = scroll;
-          this.stubWindow.trigger('scroll');
+          this.stubWindow.triggerHandler('scroll');
           this.timeout.flush();
           this.scope.$apply();
           this.scope.more.called.should.be.false;
@@ -222,7 +235,7 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
       var testDoesNotGetMoreWhenReenabled = function(scroll) {
         return function() {
           this.stubWindow[0].scrollY = scroll;
-          this.stubWindow.trigger('scroll');
+          this.stubWindow.triggerHandler('scroll');
           this.timeout.flush();
           this.scope.$apply();
           this.scope.more.called.should.be.false;

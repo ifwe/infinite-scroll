@@ -8,20 +8,14 @@ requirejs.config({
   baseUrl: '/base',
   paths: {
     'angular': 'bower_components/angular/angular',
-    'angular/mocks': 'bower_components/angular-mocks/angular-mocks',
-    'jquery': 'bower_components/jquery/jquery',
-    'underscore': 'bower_components/underscore/underscore'
+    'angular/mocks': 'bower_components/angular-mocks/angular-mocks'
   },
   shim: {
     'angular': {
-      'exports': 'angular',
-      'deps': ['jquery']
+      'exports': 'angular'
     },
     'angular/mocks': {
       'deps': ['angular']
-    },
-    'underscore': {
-      'exports': '_'
     }
   },
   deps: tests,

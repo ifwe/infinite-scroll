@@ -1,13 +1,13 @@
-/*! tagged-infinite-scroll - v0.0.1 - 2014-10-27 */
+/*! tagged-infinite-scroll - v0.0.1 - 2014-10-28 */
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(['angular'], factory);
   } else {
     // Browser globals
-    root.taggedInfiniteScroll = factory(root.angular, root._);
+    root.taggedInfiniteScroll = factory(root.angular);
   }
-}(this, function (angular, _) {
+}(this, function (angular) {
   "use strict";
 
   // Allows a container to support infinite scroll
