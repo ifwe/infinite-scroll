@@ -3,11 +3,14 @@
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(['angular'], factory);
+  } else if (typeof exports === 'object') {
+    // CommonJS
+    factory(exports, require('angular'));
   } else {
     // Browser globals
-    root.taggedInfiniteScroll = factory(root.angular);
+    factory((root.taggedInfiniteScroll = {}), root.angular);
   }
-}(this, function (angular) {
+}(this, function (exports, angular) {
   "use strict";
 
   // Allows a container to support infinite scroll
@@ -62,5 +65,7 @@
   // Just return a value to define the module export.
   // This example returns an object, but the module
   // can return a function as the exported value.
-  return module;
+
+  exports.module = module;
+  return exports;
 }));
