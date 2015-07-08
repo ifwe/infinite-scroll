@@ -2,6 +2,8 @@
 [![Dependency Status](https://gemnasium.com/tagged/infinite-scroll.png)](https://gemnasium.com/tagged/infinite-scroll)
 [![Coverage Status](https://coveralls.io/repos/tagged/infinite-scroll/badge.png)](https://coveralls.io/r/tagged/infinite-scroll)
 
+# FORK: This fork is just to add CommonJS support to the original repo
+
 # Infinite Scroll for AngularJS
 A simple, yet powerful angular directive for adding infinite scroll support to any container. The `tagged-infinite-scroll` directive has support for fetching more items in a list, disabling subsequent fetches until the current fetch completes, and optimistically fetching the next set of results before the user even reaches the bottom of the container.
 
