@@ -3,11 +3,14 @@
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(['angular'], factory);
+  } else if (typeof exports === 'object') {
+    // CommonJS
+    factory(exports, require('angular'));
   } else {
     // Browser globals
-    root.taggedInfiniteScroll = factory(root.angular);
+    factory((root.taggedInfiniteScroll = {}), root.angular);
   }
-}(this, function (angular) {
+}(this, function (exports, angular) {
   "use strict";
 
   // Allows a container to support infinite scroll
@@ -30,8 +33,8 @@
             return;
           }
           var windowHeight = win[0].innerHeight;
-          var elementBottom = elem[0].offsetTop + elem[0].offsetHeight;
-          var windowBottom = windowHeight + win[0].scrollY;
+          var elementBottom = elem[0].getBoundingClientRect().bottom;
+          var windowBottom = windowHeight + (win[0].scrollY || win[0].pageYOffset);
           var remaining = elementBottom - windowBottom;
           var shouldGetMore = (remaining - parseInt(scope.distance || 0, 10) <= 0);
 
@@ -62,5 +65,7 @@
   // Just return a value to define the module export.
   // This example returns an object, but the module
   // can return a function as the exported value.
-  return module;
+
+  exports.module = module;
+  return exports;
 }));
