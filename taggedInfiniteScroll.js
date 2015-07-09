@@ -33,7 +33,7 @@
             return;
           }
           var windowHeight = win[0].innerHeight;
-          var elementBottom = getBoundingClientRect().bottom;
+          var elementBottom = elem[0].getBoundingClientRect().bottom;
           var windowBottom = windowHeight + (win[0].scrollY || win[0].pageYOffset);
           var remaining = elementBottom - windowBottom;
           var shouldGetMore = (remaining - parseInt(scope.distance || 0, 10) <= 0);
