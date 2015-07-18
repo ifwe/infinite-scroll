@@ -1,4 +1,4 @@
-/*! tagged-infinite-scroll - v1.1.0 - 2014-10-28 */
+/*! tagged-infinite-scroll - v1.1.1 - 2015-07-17 */
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
@@ -31,7 +31,7 @@
           }
           var windowHeight = win[0].innerHeight;
           var elementBottom = elem[0].offsetTop + elem[0].offsetHeight;
-          var windowBottom = windowHeight + win[0].scrollY;
+          var windowBottom = windowHeight + (win[0].scrollY || win[0].pageYOffset);
           var remaining = elementBottom - windowBottom;
           var shouldGetMore = (remaining - parseInt(scope.distance || 0, 10) <= 0);
 
