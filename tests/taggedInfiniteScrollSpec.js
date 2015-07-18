@@ -40,9 +40,35 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
       };
     };
 
+    var testDoesNotGetMoreInterwebExploder = function(scroll) {
+      return function() {
+        this.stubWindow[0].pageYOffset = scroll;
+        this.stubWindow.triggerHandler('scroll');
+        this.timeout.flush();
+        this.scope.$apply();
+        // 2nd timer, if any
+        try { this.timeout.flush(); } catch (e) { }
+        this.timeout.verifyNoPendingTasks();
+        this.scope.more.called.should.be.false;
+      };
+    };
+
     var testDoesGetMore = function(scroll) {
       return function() {
         this.stubWindow[0].scrollY = scroll;
+        this.stubWindow.triggerHandler('scroll');
+        this.timeout.flush();
+        this.scope.$apply();
+        // 2nd timer, if any
+        try { this.timeout.flush(); } catch (e) { }
+        this.timeout.verifyNoPendingTasks();
+        this.scope.more.called.should.be.true;
+      };
+    };
+
+    var testDoesGetMoreInterwebExploder = function(scroll) {
+      return function() {
+        this.stubWindow[0].pageYOffset = scroll;
         this.stubWindow.triggerHandler('scroll');
         this.timeout.flush();
         this.scope.$apply();
@@ -91,6 +117,16 @@ define(['src/taggedInfiniteScroll', 'angular/mocks'], function() {
 
       angular.forEach([700, 800, 900, 1000], function(scroll) {
         it('gets more when scrolled to ' + scroll + ' / 1000', testDoesGetMore(scroll));
+      });
+
+      describe('Interweb Exploder support', function() {
+        angular.forEach([0, 100, 200, 300, 400, 500, 600], function(scroll) {
+          it('does not get more if scrolled to ' + scroll + ' / 1000', testDoesNotGetMoreInterwebExploder(scroll));
+        });
+
+        angular.forEach([700, 800, 900, 1000], function(scroll) {
+          it('gets more when scrolled to ' + scroll + ' / 1000', testDoesGetMoreInterwebExploder(scroll));
+        });
       });
 
       it('removes window scroll handler when element is removed', function() {

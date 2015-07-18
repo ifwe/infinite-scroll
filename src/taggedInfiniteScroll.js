@@ -30,7 +30,7 @@
           }
           var windowHeight = win[0].innerHeight;
           var elementBottom = elem[0].offsetTop + elem[0].offsetHeight;
-          var windowBottom = windowHeight + win[0].scrollY;
+          var windowBottom = windowHeight + (win[0].scrollY || win[0].pageYOffset);
           var remaining = elementBottom - windowBottom;
           var shouldGetMore = (remaining - parseInt(scope.distance || 0, 10) <= 0);
 
