@@ -4,7 +4,7 @@ module.exports = function(config) {
   config.set({
     // base path, that will be used to resolve files and exclude
     basePath: '../',
-    urlRoot: '/base/',
+    urlRoot: '',
 
     // frameworks to use
     frameworks: ['mocha', 'requirejs', 'sinon-chai'],
@@ -26,7 +26,7 @@ module.exports = function(config) {
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['dots', 'coverage'],
+    reporters: ['progress', 'dots', 'coverage'],
 
     hostname: '0.0.0.0',
 
@@ -58,7 +58,7 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: true,
+    singleRun: false,
 
     plugins: [
       // these plugins will be require() by Karma
@@ -71,7 +71,7 @@ module.exports = function(config) {
       'karma-firefox-launcher',
       'karma-phantomjs-launcher',
       'karma-safari-launcher',
-      
+
       // Reporters
       'karma-coverage',
       'karma-junit-reporter',

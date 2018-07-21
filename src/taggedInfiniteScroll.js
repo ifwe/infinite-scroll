@@ -1,4 +1,5 @@
 (function (root, factory) {
+    console.log('defining');
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(['angular'], factory);
