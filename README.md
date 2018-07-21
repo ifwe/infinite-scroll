@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/tagged/infinite-scroll.png)](https://travis-ci.org/tagged/infinite-scroll)
-[![Dependency Status](https://gemnasium.com/tagged/infinite-scroll.png)](https://gemnasium.com/tagged/infinite-scroll)
 [![Coverage Status](https://coveralls.io/repos/tagged/infinite-scroll/badge.png)](https://coveralls.io/r/tagged/infinite-scroll)
 
 # Infinite Scroll for AngularJS
