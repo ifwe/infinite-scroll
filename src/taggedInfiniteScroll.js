@@ -21,6 +21,16 @@
         disabled: '=taggedInfiniteScrollDisabled'
       },
       link: function(scope, elem, attrs) {
+        /**
+         * Number of miliseconds, after that callback is fired when scolling is not continue.
+         * If scolling is restared in this interval, callback will be postponed to next end of scrolling.
+         * Note: This is for better behaviour when smooth scrolling is enabled, or slow scroll by mouse
+         * @constant
+         * @type {number}
+         */
+        var timeThreshold = 400;
+        var callbackDelayPromise;
+
         var win = angular.element($window);
 
         var onScroll = function(oldValue, newValue) {
@@ -35,13 +45,22 @@
           var shouldGetMore = (remaining - parseInt(scope.distance || 0, 10) <= 0);
 
           if (shouldGetMore) {
-            $timeout(scope.callback);
+
+            // Schedule callback call
+            if (callbackDelayPromise) {
+              // Calling already scheduled. Restart counter (= wait for scroll end).
+              $timeout.cancel(callbackDelayPromise);
+            }
+            callbackDelayPromise = $timeout(function () {
+              scope.callback();
+              callbackDelayPromise = null;
+            }, timeThreshold);
           }
         };
 
         // Check immediately if we need more items upon reenabling.
         scope.$watch('disabled', function(isDisabled){
-            if (false === isDisabled) onScroll();
+          if (false === isDisabled) onScroll();
         });
 
         win.bind('scroll', onScroll);
